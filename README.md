@@ -1,13 +1,13 @@
-# ELT-Data-Pipeline-Automation-and-Visualization
+# Automated Weather Data Pipeline with ELT and Visualization
 
 ### Project Summary
-•	Built an ELT pipeline to extract weather data from APIs and load it into a Snowflake data warehouse / Amazon RDS
+•	Built an ELT pipeline to extract weather data from APIs and load it into a Snowflake data warehouse
 
-•	Developed dbt models to create staging views and transform raw data into analytics-ready marts using SQL joins
+•	Developed dbt models to create staging views and transform raw data into analytics-ready marts using SQL
 
-•	Automated the entire pipeline using Apache Airflow with Docker, enabling scheduled ELT operation
+•	Automated scheduled ELT processes with Apache Airflow and Docker orchestration
 
-•	Designed a Power BI dashboard connected to Snowflake to visualize real-time weather and air quality tatistics
+•	Designed a Power BI dashboard connected to Snowflake to visualize real-time weather and air quality trends and statistics
 
 ### License and Usage Terms
 This repository and its contents are © 2025 Miles Xi. All rights reserved.
