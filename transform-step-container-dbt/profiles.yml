@@ -1,0 +1,44 @@
+#  ~/elt/transform-step-container-dbt/profiles.yml
+#  ~/.dbt/profiles.yml (originally, folder ~/.dbt now deleted)
+# this files is like a Snowflake login/settings sheet 
+# so dbt knows how to connect to Snowflake
+
+new_weather_proj:
+  outputs:
+    dev:
+      account: redacted
+      database: WEATHER_DB
+      password: redacted
+      role: ACCOUNTADMIN
+      schema: TRANSFORM
+      threads: 1
+      type: snowflake
+      user: miles
+      warehouse: ETL_WH
+  target: dev
+weather_project:
+  outputs:
+    dev:
+      account: redacted
+      database: WEATHER_DB
+      password: redacted
+      role: ACCOUNTADMIN
+      schema: TRANSFORM
+      threads: 1
+      type: snowflake
+      user: miles
+      warehouse: ETL_WH
+  target: dev
+weather_transforms:
+  outputs:
+    dev:
+      account: redacted
+      database: WEATHER_DB
+      password: redacted
+      role: ACCOUNTADMIN
+      schema: TRANSFORM  # doesn't require an existing TRANSFORM schema in snowflake
+      threads: 1
+      type: snowflake
+      user: miles
+      warehouse: ETL_WH
+  target: dev
