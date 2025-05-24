@@ -1,0 +1,54 @@
+# this file 
+# tells Docker how to set up Airflow and its database which includes a web interface and a scheduler
+
+#version: '3.7'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+
+  airflow-webserver:
+      build: .
+      container_name: airflow-webserver
+      restart: always
+      depends_on:
+        - postgres
+      environment:
+        AIRFLOW__CORE__EXECUTOR: LocalExecutor
+        AIRFLOW__CORE__FERNET_KEY: ''
+        AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
+        AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+        AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      volumes:
+        - ./dags:/opt/airflow/dags
+        - ../:/opt/airflow/project
+        - ../transform-step-container-dbt/profile.yml:/opt/airflow/profile.yml  # map profiles.yml to docker container
+      ports:
+        - "8080:8080"
+      command: bash -c "airflow db migrate && airflow users create --username admin --password admin --firstname admin --lastname admin --role Admin --email admin@example.com && exec airflow webserver"
+
+  airflow-scheduler:
+    build: .
+    container_name: airflow-scheduler
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ../:/opt/airflow/project
+      - ../transform-step-container-dbt/profile.yml:/opt/airflow/profile.yml
+    command: airflow scheduler
+
+# volumes
+# Each line follows this pattern: - [path on your computer]:[path inside Docker container]

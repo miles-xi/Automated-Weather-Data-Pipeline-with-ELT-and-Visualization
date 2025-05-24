@@ -1,0 +1,12 @@
+# This Dockerfile will install dbt into the Airflow container
+
+# Start from the official Airflow image
+FROM apache/airflow:2.8.1-python3.10
+
+# Install dbt and the Snowflake adapter
+USER airflow
+RUN pip install --no-cache-dir dbt-core dbt-snowflake
+
+# Switch back to airflow user (required)
+USER airflow  
+
